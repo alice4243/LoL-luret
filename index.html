@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ランダム役割抽選</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 50px;
+        }
+        h1 {
+            color: #333;
+        }
+        .roles {
+            margin: 10px 0;
+        }
+        .role {
+            font-size: 1.2em;
+            margin: 5px;
+            padding: 5px 15px;
+            border: 2px solid #444;
+            border-radius: 8px;
+            background-color: #f0f0f0;
+            width: 200px;
+            text-align: center;
+        }
+        .button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ランダム役割抽選</h1>
+    
+    <div class="roles">
+        <div class="role" id="top">top: </div>
+        <div class="role" id="jg">jg: </div>
+        <div class="role" id="mid">mid: </div>
+        <div class="role" id="adc">adc: </div>
+        <div class="role" id="sup">sup: </div>
+    </div>
+    
+    <button class="button" onclick="startRandomAssignment()">ランダム抽選開始</button>
+
+    <script>
+        const names = ["ありす", "ラルラリラ", "キチシン", "たこやきちゃ", "和菓子"];
+        const roles = ["top", "jg", "mid", "adc", "sup"];
+        let interval;
+
+        function assignRolesRandomly() {
+            // 名前をシャッフルし、一時的にランダム表示
+            const shuffledNames = [...names].sort(() => Math.random() - 0.5);
+            roles.forEach((role, index) => {
+                document.getElementById(role).innerText = `${role}: ${shuffledNames[index]}`;
+            });
+        }
+
+        function startRandomAssignment() {
+            // ボタンが押されたらランダム表示を開始
+            clearInterval(interval);
+            interval = setInterval(assignRolesRandomly, 100);
+
+            // 1.5秒後に最終結果に固定
+            setTimeout(() => {
+                clearInterval(interval);
+                finalizeAssignment();
+            }, 1500);
+        }
+
+        function finalizeAssignment() {
+            // 最終的な名前の割り当てを行い、表示を固定
+            const finalNames = [...names].sort(() => Math.random() - 0.5);
+            roles.forEach((role, index) => {
+                document.getElementById(role).innerText = `${role}: ${finalNames[index]}`;
+            });
+        }
+    </script>
+
+</body>
+</html>
